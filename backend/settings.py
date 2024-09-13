@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 import boto3
-from botocore.exceptions import NoCredentialsError
+from botocore.exceptions import NoCredentialsError, ClientError
 
 load_dotenv()
 
@@ -29,12 +29,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def get_secret():
-    client = boto3.client('ssm')
+    client = boto3.client('ssm', region_name='us-east-2')
     try:
-        response = client.get_parameter(Name='/path/to/your/secret', WithDecryption=True)
+        response = client.get_parameter(Name='salmon-sim-secret-key', WithDecryption=True)
         return response['Parameter']['Value']
+    # Handle missing AWS credentials
     except NoCredentialsError:
-        return 'Your fallback value if credentials are not found'
+        raise Exception('Error: No AWS credentials found')
+    
+    # Handle other errors, like missing parameter
+    except ClientError as e:
+        raise Exception(f"Error fetching secret: {e}")
 
 SECRET_KEY = get_secret()
 
