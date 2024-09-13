@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import boto3
+from botocore.exceptions import NoCredentialsError
 
 load_dotenv()
 
@@ -24,7 +26,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+
+
+def get_secret():
+    client = boto3.client('ssm')
+    try:
+        response = client.get_parameter(Name='/path/to/your/secret', WithDecryption=True)
+        return response['Parameter']['Value']
+    except NoCredentialsError:
+        return 'Your fallback value if credentials are not found'
+
+SECRET_KEY = get_secret()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
