@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def get_secret():
     client = boto3.client('ssm', region_name='us-east-2')
     try:
-        response = client.get_parameter(Name='salmon-sim-secret-key', WithDecryption=True)
+        response = client.get_parameter(Name='arn:aws:ssm:us-east-2:039612842068:parameter/salmonsim-secret-key', WithDecryption=True)
         return response['Parameter']['Value']
     # Handle missing AWS credentials
     except NoCredentialsError:
