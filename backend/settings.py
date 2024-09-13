@@ -16,12 +16,6 @@ import os
 
 load_dotenv()
 
-dbconfig_name = os.getenv("DBCONFIG_NAME")
-dbconfig_user = os.getenv("DBCONFIG_USER")
-dbconfig_password = os.getenv("DBCONFIG_PASSWORD")
-dbconfig_host = os.getenv("DBCONFIG_HOST")
-dbconfig_port = os.getenv("DBCONFIG_PORT")
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -95,17 +89,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": dbconfig_name,
-#         "USER": dbconfig_user,
-#         "PASSWORD": dbconfig_password,
-#         "HOST": dbconfig_host,
-#         "PORT": dbconfig_port,
-#     }
-# }
 
 DATABASES = {
     'default': {

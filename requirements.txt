@@ -86,7 +86,6 @@ phonenumbers==8.13.26
 pillow==10.3.0
 polib==1.2.0
 prompt-toolkit==3.0.39
-psycopg2==2.9.9
 pycparser==2.22
 PyJWT==2.8.0
 python-dateutil==2.8.2
